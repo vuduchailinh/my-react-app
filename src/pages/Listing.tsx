@@ -8,6 +8,7 @@ import {Column, DynamicTable} from "../components/DynamicTable.tsx";
 import {Address} from "../apis/types/employees.type.tsx";
 import React, {useState} from "react";
 import {Pagination} from "../components/Pagination.tsx";
+import Detail from "./Detail.tsx";
 
 const initialEmployeeColumns: Column[] = [
     {title: 'ID', key: 'id'},
@@ -40,7 +41,8 @@ function Listing() {
             page,
             limit
         ],
-        queryFn: () => getEmployees(page, limit)
+        queryFn: () => getEmployees(page, limit),
+        placeholderData: (previousData) => previousData
     })
 
     const totalPages = employeesQuery.data?.data?.pages || 0
@@ -102,6 +104,7 @@ function Listing() {
                         return <Flex gap={'1'}>
                             <Link href='#' onClick={() => navigate(`/employees/upsert/${data.id}`)}>Update</Link>
                             <Deleting id={data.id}/>
+                            <Detail id={data.id} />
                         </Flex>
                     }}
                     pagination={<Pagination

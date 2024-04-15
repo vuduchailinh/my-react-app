@@ -19,15 +19,15 @@ export type TableProps<T extends DataTable> = {
     data: T[]
     columns: Column[],
     actionPerRow: ActionPerRow
-    pagination?: ReactElement
+    pagination?: ReactElement,
 }
 
 export const DynamicTable = <T extends DataTable>({
-                                               data,
-                                               columns,
-                                               actionPerRow,
-                                               pagination
-                                           }: TableProps<T>) => {
+                                                      data,
+                                                      columns,
+                                                      actionPerRow,
+                                                      pagination
+                                                  }: TableProps<T>) => {
 
     return (
         <Container>
@@ -46,7 +46,9 @@ export const DynamicTable = <T extends DataTable>({
                 <Table.Body>
                     {
                         data.map((row, rowIndex) =>
-                            <Table.Row key={rowIndex}>
+                            <Table.Row
+                                key={rowIndex}
+                            >
                                 {
                                     columns.filter(column => !column.isHidden)
                                         .map((column, colIndex) => {

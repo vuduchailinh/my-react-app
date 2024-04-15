@@ -19,10 +19,10 @@ export const Pagination = ({
     return (
         <Flex justify={'center'} pt={'5'} gap={'1'}>
             <Button
-                disabled={page >= totalPages}
-                onClick={onNextClick}
+                disabled={page <= 1}
+                onClick={onPreviousClick}
             >
-                Next
+                Previous
             </Button>
             {
                 totalPages > 0 &&
@@ -45,10 +45,10 @@ export const Pagination = ({
                     })
             }
             <Button
-                disabled={page <= 1}
-                onClick={onPreviousClick}
+                disabled={page >= totalPages}
+                onClick={onNextClick}
             >
-                Previous
+                Next
             </Button>
         </Flex>
     )
