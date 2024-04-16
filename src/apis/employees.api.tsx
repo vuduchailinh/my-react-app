@@ -2,11 +2,12 @@ import { Employee } from './types/employees.type'
 import { Pageable } from './types'
 import http from '../utils/http'
 
-export const getEmployees = (page: number | string, perPage: number | string = 10) =>
+export const getEmployees = (page: number | string, perPage: number | string = 10, sortBy?: string) =>
     http.get<Pageable<Employee>>('/employees', {
         params: {
             _page: page,
-            _per_page: perPage
+            _per_page: perPage,
+            _sort: sortBy
         }
     })
 

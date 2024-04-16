@@ -22,3 +22,12 @@ The app is built using:
 - Axios
 - Radix UI
 - Storybook
+
+### 3. What are the features of the app?
+The app has the following features:
+- Display a list of employees
+- Display the details of an employee
+- Add a new employee
+- Edit an employee
+- Delete an employee
+- Sort employees by clicking on the table headers

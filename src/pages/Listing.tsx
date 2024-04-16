@@ -35,13 +35,15 @@ function Listing() {
     const queryString: { page?: string, limit?: string } = useQueryString()
     const page = Math.max(Number(queryString.page) || 1, 1)
     const limit = Math.max(Number(queryString.limit) || 10, 1)
+    const [sort, setSort] = useState<string>('')
     const employeesQuery = useQuery({
         queryKey: [
             'employees',
             page,
-            limit
+            limit,
+            sort
         ],
-        queryFn: () => getEmployees(page, limit),
+        queryFn: () => getEmployees(page, limit, sort),
         placeholderData: (previousData) => previousData
     })
 
@@ -55,6 +57,14 @@ function Listing() {
             return column;
         });
         setEmployeeColumns(updatedColumns);
+    }
+
+    const onColumnClick = (column: Column) => {
+        if (sort.startsWith('-')) {
+            setSort('+' + column.key)
+        } else {
+            setSort('-' + column.key)
+        }
     }
 
     return (
@@ -107,6 +117,7 @@ function Listing() {
                             <Detail id={data.id} />
                         </Flex>
                     }}
+                    onColumnClick={onColumnClick}
                     pagination={<Pagination
                         page={page}
                         totalPages={totalPages}

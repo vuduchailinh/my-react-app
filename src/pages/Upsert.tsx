@@ -44,7 +44,8 @@ function Upsert() {
             id
         ],
         queryFn: () => getEmployee(id as string),
-        enabled: id !== undefined
+        enabled: id !== undefined,
+        staleTime: 1000 * 60
     })
 
     const addEmployeeMutation = useMutation({
@@ -63,7 +64,8 @@ function Upsert() {
     const updateEmployeeMutation = useMutation({
         mutationFn: (body: Employee) => updateEmployee(body.id, body),
         onSuccess: () => {
-            queryClient.setQueryData(['employee', id], employeeForm)
+            queryClient.invalidateQueries({queryKey: ['employee', id]})
+                .then()
             toast.success('Employee updated successfully')
             navigate('/employees')
         },

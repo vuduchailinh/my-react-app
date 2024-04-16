@@ -14,14 +14,19 @@ const Detail = ({id}: Props) => {
 
     const employeeQuery = useQuery({
         queryKey: ['employee', id],
-        queryFn: () => getEmployee(id)
+        queryFn: () => getEmployee(id),
+        enabled: isOpen,
+        staleTime: 1000 * 60
     })
 
     const onOpenChange = () => {
-        if (employeeQuery.data?.data) {
-            setIsOpen(!isOpen)
-        } else {
-            toast.error('Failed to fetch employee detail')
+        setIsOpen(!isOpen)
+        if (!isOpen) {
+            return null
+        }
+        if (employeeQuery.isError || (!employeeQuery.isLoading && !employeeQuery.data?.data)) {
+            toast.error('Employee not found')
+            return null
         }
     }
 
